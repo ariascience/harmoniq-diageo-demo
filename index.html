@@ -288,6 +288,11 @@
     .tc-checkbox{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-2);cursor:pointer}
     .tc-checkbox input{width:15px;height:15px;accent-color:var(--accent)}
 
+    /* ── Inline status dots & icon replacements ──── */
+    .dot{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;margin-right:2px;flex-shrink:0}
+    .dot-r{background:var(--red)}.dot-a{background:var(--amber)}.dot-g{background:var(--green)}.dot-b{background:var(--blue)}.dot-m{background:var(--text-3)}
+    .ico{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;flex-shrink:0;vertical-align:middle}
+
     /* ── Right sidebar (Agent Brain) ────────────── */
     .right-panel{width:0;overflow:hidden;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:width .25s ease}
     .right-panel.open{width:300px}
@@ -616,8 +621,8 @@
       <span class="breadcrumb-current" id="topTitle">New Analysis</span>
     </div>
     <div class="topbar-actions">
-      <button class="topbar-pill" onclick="showMemoryBrain()">🧠 Agent Brain</button>
-      <button class="topbar-pill">📋 History</button>
+      <button class="topbar-pill" onclick="showMemoryBrain()"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle"><circle cx="7" cy="7" r="5.5"/><path d="M5 7c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5"/></svg> Agent Brain</button>
+      <button class="topbar-pill"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="3" y="1" width="8" height="11" rx="1.5"/><path d="M5.5 1v1.5h3V1"/><path d="M5.5 5.5h3M5.5 7.5h3M5.5 9.5h2"/></svg> History</button>
     </div>
   </div>
 
@@ -646,7 +651,7 @@
 <!-- ═══ RIGHT PANEL — Agent Brain ═══ -->
 <div class="right-panel" id="rightPanel">
   <div class="right-panel-header">
-    <span style="font-size:16px">🧠</span>
+    <span style="font-size:16px"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle"><circle cx="7" cy="7" r="5.5"/><path d="M5 7c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5"/></svg></span>
     <span class="right-panel-title">Agent Brain</span>
     <button class="right-panel-close" onclick="closeRightPanel()">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
@@ -654,7 +659,7 @@
   </div>
   <div class="right-panel-body" id="brainBody">
     <div class="right-panel-empty" id="brainEmpty">
-      <div style="font-size:28px;margin-bottom:8px;opacity:.4">🧠</div>
+      <div style="font-size:28px;margin-bottom:8px;opacity:.4"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle"><circle cx="7" cy="7" r="5.5"/><path d="M5 7c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5"/></svg></div>
       <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:4px">No memories yet</div>
       <div>Run an analysis to populate the Agent Brain with learnings.</div>
     </div>
@@ -664,7 +669,7 @@
 <!-- HITL MODAL -->
 <div class="modal-overlay hidden" id="hitlModal">
   <div class="modal">
-    <div class="modal-header"><span class="modal-severity high">🔴 HIGH SEVERITY</span><span class="modal-title">Conflict Detected</span></div>
+    <div class="modal-header"><span class="modal-severity high"><span class="dot dot-r"></span> HIGH SEVERITY</span><span class="modal-title">Conflict Detected</span></div>
     <div class="modal-body">
       <div class="modal-detail"><strong>Type:</strong> KPI Threshold Breach<br><strong>Metric:</strong> Tesco Availability for <strong>Baileys Original Irish Cream 700ml</strong> dropped to <strong>74%</strong> — below the 80% minimum.<br><strong>Revenue Risk:</strong> £220K ENSV.</div>
       <div class="modal-kpi">
@@ -686,7 +691,7 @@
 <!-- SCHEDULE MODAL -->
 <div class="modal-overlay hidden" id="scheduleModal">
   <div class="modal" style="width:560px">
-    <div class="modal-header"><span style="font-size:15px;font-weight:700">📅 Schedule This Analysis</span></div>
+    <div class="modal-header"><span style="font-size:15px;font-weight:700"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="1.5" y="2.5" width="10" height="9" rx="1.5"/><path d="M4 1v3M9 1v3M1.5 5.5h10"/></svg> Schedule This Analysis</span></div>
     <div class="modal-body">
       <div class="tc-row"><span class="tc-label">Template Name</span><div class="tc-value"><input class="tc-input" id="schedName" value="Baileys UK Shelf Availability"/></div></div>
       <div class="tc-row"><span class="tc-label">Frequency</span><div class="tc-value"><select class="tc-select" id="schedFreq"><option>Weekly (Mon 9:00 AM)</option><option>Daily (9:00 AM)</option><option>Bi-weekly</option><option>Monthly</option></select></div></div>
@@ -802,13 +807,13 @@ function renderTemplatesPage(){
   document.querySelector('.breadcrumb-root').textContent='Templates';
   document.getElementById('topTitle').textContent='All Templates';
   if(!templates.length){
-    pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon">📋</div><div class="page-empty-title">No templates saved yet</div><div>Run an analysis and click "Save as Template" to save it here.</div></div>`;
+    pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="3" y="1" width="8" height="11" rx="1.5"/><path d="M5.5 1v1.5h3V1"/><path d="M5.5 5.5h3M5.5 7.5h3M5.5 9.5h2"/></svg></div><div class="page-empty-title">No templates saved yet</div><div>Run an analysis and click "Save as Template" to save it here.</div></div>`;
     return;
   }
   let cards=templates.map((t,i)=>`
     <div class="page-card" onclick="openTemplateDetail(${i})">
       <div class="page-card-header">
-        <div class="page-card-icon" style="background:var(--accent-soft);color:var(--accent)">📋</div>
+        <div class="page-card-icon" style="background:var(--accent-soft);color:var(--accent)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="3" y="1" width="8" height="11" rx="1.5"/><path d="M5.5 1v1.5h3V1"/><path d="M5.5 5.5h3M5.5 7.5h3M5.5 9.5h2"/></svg></div>
         <div class="page-card-info"><div class="page-card-name">${t.name}</div><div class="page-card-meta">Created ${t.created}</div></div>
       </div>
       <div class="page-card-body">
@@ -816,7 +821,7 @@ function renderTemplatesPage(){
         <div class="page-card-row"><span class="page-card-label">Market</span><span>${t.market}</span></div>
         <div class="page-card-row"><span class="page-card-label">Sources</span><span>7 data connections</span></div>
       </div>
-      <div class="page-card-footer"><button class="btn-primary" onclick="event.stopPropagation();rerunFromTemplate()">▶ Re-run</button><button class="btn-secondary" onclick="event.stopPropagation();document.getElementById('scheduleModal').classList.remove('hidden')">📅 Schedule</button></div>
+      <div class="page-card-footer"><button class="btn-primary" onclick="event.stopPropagation();rerunFromTemplate()">▶ Re-run</button><button class="btn-secondary" onclick="event.stopPropagation();document.getElementById('scheduleModal').classList.remove('hidden')"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="1.5" y="2.5" width="10" height="9" rx="1.5"/><path d="M4 1v3M9 1v3M1.5 5.5h10"/></svg> Schedule</button></div>
     </div>`).join('');
   pv.innerHTML=`<div><div class="page-title">Templates</div><div class="page-subtitle">${templates.length} saved template${templates.length>1?'s':''}</div></div><div class="page-grid">${cards}</div>`;
 }
@@ -827,7 +832,7 @@ function openTemplateDetail(i){
   pv.innerHTML=`
     <button class="btn-secondary" onclick="renderTemplatesPage()" style="width:fit-content">← Back to Templates</button>
     <div class="detail-panel">
-      <div class="detail-header"><div class="detail-icon" style="background:var(--accent-soft);color:var(--accent)">📋</div><div><div class="detail-title">${t.name}</div><div class="detail-subtitle">Saved template · Created ${t.created}</div></div></div>
+      <div class="detail-header"><div class="detail-icon" style="background:var(--accent-soft);color:var(--accent)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="3" y="1" width="8" height="11" rx="1.5"/><path d="M5.5 1v1.5h3V1"/><path d="M5.5 5.5h3M5.5 7.5h3M5.5 9.5h2"/></svg></div><div><div class="detail-title">${t.name}</div><div class="detail-subtitle">Saved template · Created ${t.created}</div></div></div>
       <div class="detail-body">
         <div class="detail-field"><div class="detail-field-label">Product</div><div class="detail-field-value">${t.product}</div></div>
         <div class="detail-field"><div class="detail-field-label">Market</div><div class="detail-field-value">${t.market}</div></div>
@@ -836,7 +841,7 @@ function openTemplateDetail(i){
         <div class="detail-field"><div class="detail-field-label">ENSV Formula</div><div class="detail-field-value">ENSV = Lost RSV × Elasticity (1.18 for &gt;92%)</div></div>
         <div class="detail-field"><div class="detail-field-label">Output</div><div class="detail-field-value">SENSE → PRIORITISE → EXECUTE → MEASURE report</div></div>
       </div>
-      <div class="detail-footer"><button class="btn-primary" onclick="rerunFromTemplate()">▶ Re-run Template</button><button class="btn-secondary" onclick="document.getElementById('scheduleModal').classList.remove('hidden')">📅 Schedule</button><button class="btn-secondary" onclick="openReport()">📄 Last Report</button></div>
+      <div class="detail-footer"><button class="btn-primary" onclick="rerunFromTemplate()">▶ Re-run Template</button><button class="btn-secondary" onclick="document.getElementById('scheduleModal').classList.remove('hidden')"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="1.5" y="2.5" width="10" height="9" rx="1.5"/><path d="M4 1v3M9 1v3M1.5 5.5h10"/></svg> Schedule</button><button class="btn-secondary" onclick="openReport()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M3 1.5h5l3 3v7a1 1 0 01-1 1H3a1 1 0 01-1-1v-9a1 1 0 011-1z"/><path d="M8 1.5v3h3"/></svg> Last Report</button></div>
     </div>`;
 }
 
@@ -848,13 +853,13 @@ function renderScheduledPage(){
   document.querySelector('.breadcrumb-root').textContent='Scheduled';
   document.getElementById('topTitle').textContent='Scheduled Runs';
   if(!scheduled.length){
-    pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon">🕐</div><div class="page-empty-title">No scheduled runs yet</div><div>Schedule a recurring analysis to see it here.</div></div>`;
+    pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 3.5v3l2 1.5"/></svg></div><div class="page-empty-title">No scheduled runs yet</div><div>Schedule a recurring analysis to see it here.</div></div>`;
     return;
   }
   let cards=scheduled.map((s,i)=>`
     <div class="page-card" onclick="openScheduledDetail(${i})">
       <div class="page-card-header">
-        <div class="page-card-icon" style="background:rgba(22,163,74,.08);color:var(--green)">🕐</div>
+        <div class="page-card-icon" style="background:rgba(22,163,74,.08);color:var(--green)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 3.5v3l2 1.5"/></svg></div>
         <div class="page-card-info"><div class="page-card-name">${s.name}</div><div class="page-card-meta">${s.freq}</div></div>
         <span class="page-card-status" style="background:rgba(22,163,74,.08);color:var(--green)">● Active</span>
       </div>
@@ -863,7 +868,7 @@ function renderScheduledPage(){
         <div class="page-card-row"><span class="page-card-label">Product</span><span>${P}</span></div>
         <div class="page-card-row"><span class="page-card-label">Market</span><span>UK — Tesco, Ocado, Amazon</span></div>
       </div>
-      <div class="page-card-footer"><button class="btn-green" onclick="event.stopPropagation();rerunFromTemplate()">▶ Run Now</button><button class="btn-secondary" onclick="event.stopPropagation();alert('Paused (demo)')">⏸ Pause</button></div>
+      <div class="page-card-footer"><button class="btn-green" onclick="event.stopPropagation();rerunFromTemplate()">▶ Run Now</button><button class="btn-secondary" onclick="event.stopPropagation();alert('Paused (demo)')">&#9646;&#9646; Pause</button></div>
     </div>`).join('');
   pv.innerHTML=`<div><div class="page-title">Scheduled Runs</div><div class="page-subtitle">${scheduled.length} active schedule${scheduled.length>1?'s':''}</div></div><div class="page-grid">${cards}</div>`;
 }
@@ -874,16 +879,16 @@ function openScheduledDetail(i){
   pv.innerHTML=`
     <button class="btn-secondary" onclick="renderScheduledPage()" style="width:fit-content">← Back to Scheduled</button>
     <div class="detail-panel">
-      <div class="detail-header"><div class="detail-icon" style="background:rgba(22,163,74,.08);color:var(--green)">🕐</div><div><div class="detail-title">${s.name}</div><div class="detail-subtitle"><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(22,163,74,.08);color:var(--green)">● Active</span></div></div></div>
+      <div class="detail-header"><div class="detail-icon" style="background:rgba(22,163,74,.08);color:var(--green)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 3.5v3l2 1.5"/></svg></div><div><div class="detail-title">${s.name}</div><div class="detail-subtitle"><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(22,163,74,.08);color:var(--green)">● Active</span></div></div></div>
       <div class="detail-body">
         <div class="detail-field"><div class="detail-field-label">Frequency</div><div class="detail-field-value">${s.freq}</div></div>
         <div class="detail-field"><div class="detail-field-label">Next Run</div><div class="detail-field-value">${s.nextRun}</div></div>
         <div class="detail-field"><div class="detail-field-label">Product</div><div class="detail-field-value">${P}</div></div>
         <div class="detail-field"><div class="detail-field-label">Data Sources</div><div class="detail-field-value">7 connections — Nielsen IQ, DCIQ, Bazaarvoice, Stackline, Retailer, IWSR, Crawl</div></div>
         <div class="detail-field"><div class="detail-field-label">Last Run</div><div class="detail-field-value">${today()} — completed in 2m 14s · 2 conflicts · £310K ENSV</div></div>
-        <div class="detail-field"><div class="detail-field-label">Notifications</div><div class="detail-field-value">✅ Email on HITL · ✅ Slack #diageo-shelf-ops · ✅ Team report</div></div>
+        <div class="detail-field"><div class="detail-field-label">Notifications</div><div class="detail-field-value">&#10003; Email on HITL · &#10003; Slack #diageo-shelf-ops · &#10003; Team report</div></div>
       </div>
-      <div class="detail-footer"><button class="btn-green" onclick="rerunFromTemplate()">▶ Run Now</button><button class="btn-secondary" onclick="alert('Paused (demo)')">⏸ Pause</button><button class="btn-secondary" onclick="openReport()">📄 Last Report</button><button class="btn-secondary" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="alert('Deleted (demo)')">🗑 Delete</button></div>
+      <div class="detail-footer"><button class="btn-green" onclick="rerunFromTemplate()">▶ Run Now</button><button class="btn-secondary" onclick="alert('Paused (demo)')">&#9646;&#9646; Pause</button><button class="btn-secondary" onclick="openReport()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M3 1.5h5l3 3v7a1 1 0 01-1 1H3a1 1 0 01-1-1v-9a1 1 0 011-1z"/><path d="M8 1.5v3h3"/></svg> Last Report</button><button class="btn-secondary" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="alert('Deleted (demo)')">&#10005; Delete</button></div>
     </div>`;
 }
 
@@ -895,7 +900,7 @@ function renderRelicPage(){
   document.querySelector('.breadcrumb-root').textContent='Relic';
   document.getElementById('topTitle').textContent='Audit Trail';
   if(!relicItems.length){
-    pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon">📝</div><div class="page-empty-title">No audit records yet</div><div>All HITL decisions, alerts, and learnings are logged here.</div></div>`;
+    pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M2 11l6.5-6.5 2 2L4 13H2v-2z"/><path d="M8.5 4.5l2 2"/></svg></div><div class="page-empty-title">No audit records yet</div><div>All HITL decisions, alerts, and learnings are logged here.</div></div>`;
     return;
   }
   let cards=relicItems.map((r,i)=>{
@@ -903,7 +908,7 @@ function renderRelicPage(){
     const sb=r.severity==='high'?'rgba(220,38,38,.08)':r.severity==='medium'?'rgba(217,119,6,.08)':'rgba(22,163,74,.08)';
     return `<div class="page-card" onclick="openRelicDetail(${i})">
       <div class="page-card-header">
-        <div class="page-card-icon" style="background:${sb};color:${sc}">📝</div>
+        <div class="page-card-icon" style="background:${sb};color:${sc}"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M2 11l6.5-6.5 2 2L4 13H2v-2z"/><path d="M8.5 4.5l2 2"/></svg></div>
         <div class="page-card-info"><div class="page-card-name">${r.title}</div><div class="page-card-meta">${r.type}</div></div>
         <span class="page-card-status" style="background:${sb};color:${sc}">${r.severity.toUpperCase()}</span>
       </div>
@@ -921,7 +926,7 @@ function openRelicDetail(i){
   pv.innerHTML=`
     <button class="btn-secondary" onclick="renderRelicPage()" style="width:fit-content">← Back to Relic</button>
     <div class="detail-panel">
-      <div class="detail-header"><div class="detail-icon" style="background:${sb};color:${sc}">📝</div><div><div class="detail-title">${r.title}</div><div class="detail-subtitle"><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:${sb};color:${sc}">${r.severity.toUpperCase()}</span></div></div></div>
+      <div class="detail-header"><div class="detail-icon" style="background:${sb};color:${sc}"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M2 11l6.5-6.5 2 2L4 13H2v-2z"/><path d="M8.5 4.5l2 2"/></svg></div><div><div class="detail-title">${r.title}</div><div class="detail-subtitle"><span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:${sb};color:${sc}">${r.severity.toUpperCase()}</span></div></div></div>
       <div class="detail-body">
         <div class="detail-field"><div class="detail-field-label">Event</div><div class="detail-field-value">${r.type}</div></div>
         <div class="detail-field"><div class="detail-field-label">Timestamp</div><div class="detail-field-value">${today()} at ${r.timestamp}</div></div>
@@ -952,29 +957,29 @@ function renderMemoryPage(){
   const pv=document.getElementById('pageView');
   document.querySelector('.breadcrumb-root').textContent='Memory';
   document.getElementById('topTitle').textContent='Agent Memory';
-  if(!memoryItems.length){pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon">🧠</div><div class="page-empty-title">No memories saved yet</div><div>Learnings from completed analyses will appear here.</div></div>`;return}
+  if(!memoryItems.length){pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle"><circle cx="7" cy="7" r="5.5"/><path d="M5 7c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5"/></svg></div><div class="page-empty-title">No memories saved yet</div><div>Learnings from completed analyses will appear here.</div></div>`;return}
   const scopeColors={User:'var(--accent)',Group:'var(--green)',Org:'var(--amber)',Team:'var(--blue)'};
   const scopeBgs={User:'var(--accent-soft)',Group:'rgba(22,163,74,.08)',Org:'rgba(217,119,6,.08)',Team:'rgba(37,99,235,.08)'};
   let cards=memoryItems.map(m=>`
     <div class="page-card" style="cursor:default">
       <div class="page-card-header">
-        <div class="page-card-icon" style="background:${scopeBgs[m.scope]||'var(--bg)'};color:${scopeColors[m.scope]||'var(--text-3)'}">🧠</div>
+        <div class="page-card-icon" style="background:${scopeBgs[m.scope]||'var(--bg)'};color:${scopeColors[m.scope]||'var(--text-3)'}"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle"><circle cx="7" cy="7" r="5.5"/><path d="M5 7c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5"/></svg></div>
         <div class="page-card-info"><div class="page-card-name">${m.text}</div></div>
         <span class="page-card-status" style="background:${scopeBgs[m.scope]||'var(--bg)'};color:${scopeColors[m.scope]||'var(--text-3)'}">${m.scope}</span>
       </div>
     </div>`).join('');
-  pv.innerHTML=`<div><div class="page-title">🧠 Agent Memory</div><div class="page-subtitle">${memoryItems.length} memories across User, Group, Org, and Team scopes</div></div><div class="page-grid">${cards}</div>`;
+  pv.innerHTML=`<div><div class="page-title"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle"><circle cx="7" cy="7" r="5.5"/><path d="M5 7c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5"/></svg> Agent Memory</div><div class="page-subtitle">${memoryItems.length} memories across User, Group, Org, and Team scopes</div></div><div class="page-grid">${cards}</div>`;
 }
 
 function renderKcPage(){
   const pv=document.getElementById('pageView');
   document.querySelector('.breadcrumb-root').textContent='Knowledge Config';
   document.getElementById('topTitle').textContent='Knowledge Config';
-  if(!kcItems.length){pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon">⚙️</div><div class="page-empty-title">No configurations saved yet</div><div>Thresholds, formulae, and rules from analyses will appear here.</div></div>`;return}
+  if(!kcItems.length){pv.innerHTML=`<div class="page-empty"><div class="page-empty-icon"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><circle cx="6.5" cy="6.5" r="2"/><path d="M6.5 1.5v2M6.5 9.5v2M1.5 6.5h2M9.5 6.5h2M3 3l1.5 1.5M8.5 8.5L10 10M10 3L8.5 4.5M3 10l1.5-1.5"/></svg></div><div class="page-empty-title">No configurations saved yet</div><div>Thresholds, formulae, and rules from analyses will appear here.</div></div>`;return}
   let cards=kcItems.map((k,i)=>`
     <div class="page-card" id="kcp-${i}">
       <div class="page-card-header">
-        <div class="page-card-icon" style="background:var(--accent-soft);color:var(--accent)">⚙️</div>
+        <div class="page-card-icon" style="background:var(--accent-soft);color:var(--accent)"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><circle cx="6.5" cy="6.5" r="2"/><path d="M6.5 1.5v2M6.5 9.5v2M1.5 6.5h2M9.5 6.5h2M3 3l1.5 1.5M8.5 8.5L10 10M10 3L8.5 4.5M3 10l1.5-1.5"/></svg></div>
         <div class="page-card-info">
           <div class="page-card-name kcp-display-${i}">${k.text}</div>
           <input class="tc-input kcp-input-${i}" value="${k.text}" style="display:none;margin-top:4px;font-size:12px" onkeydown="if(event.key==='Enter')kcPageSave(${i})" onblur="kcPageSave(${i})"/>
@@ -982,10 +987,10 @@ function renderKcPage(){
         <span class="page-card-status" style="background:var(--accent-soft);color:var(--accent)">${k.type}</span>
       </div>
       <div class="page-card-footer" style="border-top:1px solid var(--border-soft)">
-        <button class="btn-secondary" style="font-size:11px;padding:5px 10px" onclick="kcPageEdit(${i})">✏️ Edit</button>
+        <button class="btn-secondary" style="font-size:11px;padding:5px 10px" onclick="kcPageEdit(${i})">&#9998; Edit</button>
       </div>
     </div>`).join('');
-  pv.innerHTML=`<div><div class="page-title">⚙️ Knowledge Config</div><div class="page-subtitle">${kcItems.length} active configurations — thresholds, formulae, and rules</div></div><div class="page-grid">${cards}</div>`;
+  pv.innerHTML=`<div><div class="page-title"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><circle cx="6.5" cy="6.5" r="2"/><path d="M6.5 1.5v2M6.5 9.5v2M1.5 6.5h2M9.5 6.5h2M3 3l1.5 1.5M8.5 8.5L10 10M10 3L8.5 4.5M3 10l1.5-1.5"/></svg> Knowledge Config</div><div class="page-subtitle">${kcItems.length} active configurations — thresholds, formulae, and rules</div></div><div class="page-grid">${cards}</div>`;
 }
 
 function kcPageEdit(i){
@@ -1067,7 +1072,7 @@ function rerunFromTemplate(){
 async function runDemo(){
   await sleep(1600);const a=addMsg('ai','');await stream(a.querySelector('.msg-bubble'),`I'll analyse ${P} shelf availability across UK retailers. Let me configure the data sources and build your execution plan.`,7);
   await sleep(1200);addCard(buildDSCard());await sleep(2400);addCard(buildKCCard());
-  await sleep(1600);addCard(`<div class="card mt-12"><div class="card-body" style="display:flex;align-items:center;gap:10px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">ADD CONTEXT</span><button class="btn-secondary" style="font-size:11px;padding:5px 10px">📎 Attach file</button></div></div>`);
+  await sleep(1600);addCard(`<div class="card mt-12"><div class="card-body" style="display:flex;align-items:center;gap:10px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">ADD CONTEXT</span><button class="btn-secondary" style="font-size:11px;padding:5px 10px">+ Attach file</button></div></div>`);
   await sleep(1200);addCard(`<div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn-primary" id="buildPlanBtn" onclick="startBuildPlan()">Continue to plan →</button></div>`);
 }
 
@@ -1097,28 +1102,28 @@ async function resolveHITL(a){
 async function continueExec(){
   addCard(`<div class="card mt-12"><div class="card-header"><span class="card-header-title">ORCHESTRATION PIPELINE</span></div><div class="card-body">
     <div class="pipeline">
-      <div class="pipe-step"><span class="pipe-icon">🎯</span><span class="pipe-label">Identified ${P} · 7 sources · UK · 95% benchmark</span><span class="pipe-status complete">✅</span></div>
-      <div class="pipe-step"><span class="pipe-icon">🔄</span><span class="pipe-label">Ingesting all feeds. Ocado flagged amber.</span><span class="pipe-status complete">✅</span></div>
-      <div class="pipe-step" id="exPipe"><span class="pipe-icon">⚡</span><span class="pipe-label">Running Sense → Prioritise. Calculating ENSV across retailers.</span><span class="pipe-status active">⏳</span></div>
-      <div class="pipe-step" id="inPipe"><span class="pipe-icon">💡</span><span class="pipe-label">Generating opportunity ranking and actions.</span><span class="pipe-status pending">⬜</span></div>
+      <div class="pipe-step"><span class="pipe-icon">&#9678;</span><span class="pipe-label">Identified ${P} · 7 sources · UK · 95% benchmark</span><span class="pipe-status complete">&#10003;</span></div>
+      <div class="pipe-step"><span class="pipe-icon">&#8635;</span><span class="pipe-label">Ingesting all feeds. Ocado flagged amber.</span><span class="pipe-status complete">&#10003;</span></div>
+      <div class="pipe-step" id="exPipe"><span class="pipe-icon">&#9889;</span><span class="pipe-label">Running Sense → Prioritise. Calculating ENSV across retailers.</span><span class="pipe-status active">&#8987;</span></div>
+      <div class="pipe-step" id="inPipe"><span class="pipe-icon">&#9672;</span><span class="pipe-label">Generating opportunity ranking and actions.</span><span class="pipe-status pending">&#9633;</span></div>
     </div>
     <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="pFill" style="width:55%"></div></div><div class="progress-label"><span>Processing…</span><span id="pPct">55%</span></div></div>
   </div></div>`);
   await sleep(3500);document.getElementById('pFill').style.width='75%';document.getElementById('pPct').textContent='75%';
-  await sleep(4000);document.getElementById('exPipe').querySelector('.pipe-status').textContent='✅';document.getElementById('exPipe').querySelector('.pipe-status').className='pipe-status complete';document.getElementById('inPipe').querySelector('.pipe-status').textContent='⏳';document.getElementById('inPipe').querySelector('.pipe-status').className='pipe-status active';document.getElementById('pFill').style.width='85%';document.getElementById('pPct').textContent='85%';
-  await sleep(6000);document.getElementById('inPipe').querySelector('.pipe-status').textContent='✅';document.getElementById('inPipe').querySelector('.pipe-status').className='pipe-status complete';document.getElementById('pFill').style.width='100%';document.getElementById('pPct').textContent='100%';
+  await sleep(4000);document.getElementById('exPipe').querySelector('.pipe-status').textContent='\u2713';document.getElementById('exPipe').querySelector('.pipe-status').className='pipe-status complete';document.getElementById('inPipe').querySelector('.pipe-status').textContent='\u231B';document.getElementById('inPipe').querySelector('.pipe-status').className='pipe-status active';document.getElementById('pFill').style.width='85%';document.getElementById('pPct').textContent='85%';
+  await sleep(6000);document.getElementById('inPipe').querySelector('.pipe-status').textContent='\u2713';document.getElementById('inPipe').querySelector('.pipe-status').className='pipe-status complete';document.getElementById('pFill').style.width='100%';document.getElementById('pPct').textContent='100%';
   await sleep(2000);showResults();
 }
 
 async function showResults(){
   addCard(buildSense());await sleep(1200);addCard(buildRetailers());await sleep(1000);
-  addCard(`<div class="anomaly-banner"><span class="icon">⚠️</span><span>Ocado data 12h stale. ${PS} availability may vary.</span></div>`);await sleep(800);
+  addCard(`<div class="anomaly-banner"><span class="icon">&#9888;</span><span>Ocado data 12h stale. ${PS} availability may vary.</span></div>`);await sleep(800);
   addCard(`<div class="card"><div class="card-body" style="display:flex;gap:20px;flex-wrap:wrap"><div><div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;margin-bottom:4px">External</div><div style="font-size:12px;color:var(--text-2)">Category <strong style="color:var(--green)">+6% YoY</strong> · ${COMP}: <strong>94%</strong> · Promo <strong style="color:var(--red)">14 days</strong></div></div><div><div style="font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;margin-bottom:4px">Shopper</div><div style="font-size:12px;color:var(--text-2)">Search <strong style="color:var(--green)">+18%</strong> · Conversion <strong style="color:var(--red)">-3%</strong></div></div></div></div>`);
   await sleep(1600);
 
   // CONFLICT 1 — pauses until user acts
-  addCard(`<div class="conflict-card high"><div class="conflict-header"><span>🔴</span><span style="font-size:12px;font-weight:700">CONFLICT 1 — HIGH SEVERITY</span></div><div class="conflict-body"><div class="conflict-detail">Tesco ${PS} at 74% — below 80% threshold. £220K ENSV at risk.</div><div class="conflict-resolution">Proposed: RED Alert — replenish 1,200 units of ${P}.</div><div class="conflict-actions"><button class="conflict-btn accept" onclick="onConflict1('accept',this)">Accept</button><button class="conflict-btn" onclick="onConflict1('override',this)">Override</button><button class="conflict-btn escalate" onclick="onConflict1('escalate',this)">Escalate</button></div></div></div>`);
-  addCard(`<div class="anomaly-banner" style="background:rgba(220,38,38,.04);border-color:rgba(220,38,38,.2)"><span class="icon">⏸</span><span style="font-size:11px"><strong>Process paused</strong> — waiting for your decision on Conflict 1 before continuing.</span></div>`);
+  addCard(`<div class="conflict-card high"><div class="conflict-header"><span><span class="dot dot-r"></span></span><span style="font-size:12px;font-weight:700">CONFLICT 1 — HIGH SEVERITY</span></div><div class="conflict-body"><div class="conflict-detail">Tesco ${PS} at 74% — below 80% threshold. £220K ENSV at risk.</div><div class="conflict-resolution">Proposed: RED Alert — replenish 1,200 units of ${P}.</div><div class="conflict-actions"><button class="conflict-btn accept" onclick="onConflict1('accept',this)">Accept</button><button class="conflict-btn" onclick="onConflict1('override',this)">Override</button><button class="conflict-btn escalate" onclick="onConflict1('escalate',this)">Escalate</button></div></div></div>`);
+  addCard(`<div class="anomaly-banner" style="background:rgba(220,38,38,.04);border-color:rgba(220,38,38,.2)"><span class="icon">&#9646;&#9646;</span><span style="font-size:11px"><strong>Process paused</strong> — waiting for your decision on Conflict 1 before continuing.</span></div>`);
 
   // Wait for user action
   await new Promise(r=>{resolveConflict1=r});
@@ -1126,8 +1131,8 @@ async function showResults(){
   await sleep(1600);
 
   // CONFLICT 2 — pauses until user acts
-  addCard(`<div class="conflict-card medium"><div class="conflict-header"><span>🟡</span><span style="font-size:12px;font-weight:700">CONFLICT 2 — MEDIUM SEVERITY</span></div><div class="conflict-body"><div class="conflict-detail">Ocado feed 12h delayed. Confidence: 71%.</div><div class="conflict-resolution">Proposed: Proceed with last data for ${PS}. Flag in Relic.</div><div class="conflict-actions"><button class="conflict-btn accept" onclick="onConflict2('accept',this)">Accept</button><button class="conflict-btn" onclick="onConflict2('override',this)">Override</button><button class="conflict-btn escalate" onclick="onConflict2('escalate',this)">Escalate</button></div></div></div>`);
-  addCard(`<div class="anomaly-banner" style="background:rgba(217,119,6,.04);border-color:rgba(217,119,6,.2)"><span class="icon">⏸</span><span style="font-size:11px"><strong>Process paused</strong> — waiting for your decision on Conflict 2.</span></div>`);
+  addCard(`<div class="conflict-card medium"><div class="conflict-header"><span><span class="dot dot-a"></span></span><span style="font-size:12px;font-weight:700">CONFLICT 2 — MEDIUM SEVERITY</span></div><div class="conflict-body"><div class="conflict-detail">Ocado feed 12h delayed. Confidence: 71%.</div><div class="conflict-resolution">Proposed: Proceed with last data for ${PS}. Flag in Relic.</div><div class="conflict-actions"><button class="conflict-btn accept" onclick="onConflict2('accept',this)">Accept</button><button class="conflict-btn" onclick="onConflict2('override',this)">Override</button><button class="conflict-btn escalate" onclick="onConflict2('escalate',this)">Escalate</button></div></div></div>`);
+  addCard(`<div class="anomaly-banner" style="background:rgba(217,119,6,.04);border-color:rgba(217,119,6,.2)"><span class="icon">&#9646;&#9646;</span><span style="font-size:11px"><strong>Process paused</strong> — waiting for your decision on Conflict 2.</span></div>`);
 
   await new Promise(r=>{resolveConflict2=r});
   addCard(`<div class="anomaly-banner"><span class="icon">✓</span><span style="font-size:11px">Conflict 2 resolved. All decisions logged to <strong>Relic</strong>.</span></div>`);
@@ -1140,7 +1145,7 @@ async function showFinal(){
   addMsg('ai',`Analysis complete. Your report for <strong>${P}</strong> is ready.`);await sleep(1200);
   addCard(`<div class="output-banner"><div class="output-banner-icon"><svg width="18" height="18" fill="none" stroke="#fff" stroke-width="1.5"><path d="M3 3h12v12H3z"/><path d="M6 7h6M6 10h4"/></svg></div><div class="output-banner-info"><div class="output-banner-title">Baileys_UK_Shelf_Report.html</div><div class="output-banner-desc">SENSE → PRIORITISE → EXECUTE → MEASURE</div></div><button class="btn-primary" style="font-size:12px;padding:6px 14px" onclick="openReport()">Preview</button><button class="btn-secondary" style="font-size:12px;padding:6px 14px" onclick="openReport()">New Tab ↗</button></div>`);
   await sleep(1200);
-  addCard(`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn-secondary" id="btnSaveTpl" onclick="saveTemplate()">📋 Save Template</button><button class="btn-secondary" onclick="document.getElementById('scheduleModal').classList.remove('hidden')">📅 Schedule</button><button class="btn-secondary" onclick="saveToRelic()">📝 Save to Relic</button><button class="btn-secondary" onclick="showInsightIQ()">💬 Follow-ups</button></div>`);
+  addCard(`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn-secondary" id="btnSaveTpl" onclick="saveTemplate()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="3" y="1" width="8" height="11" rx="1.5"/><path d="M5.5 1v1.5h3V1"/><path d="M5.5 5.5h3M5.5 7.5h3M5.5 9.5h2"/></svg> Save Template</button><button class="btn-secondary" onclick="document.getElementById('scheduleModal').classList.remove('hidden')"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><rect x="1.5" y="2.5" width="10" height="9" rx="1.5"/><path d="M4 1v3M9 1v3M1.5 5.5h10"/></svg> Schedule</button><button class="btn-secondary" onclick="saveToRelic()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M2 11l6.5-6.5 2 2L4 13H2v-2z"/><path d="M8.5 4.5l2 2"/></svg> Save to Relic</button><button class="btn-secondary" onclick="showInsightIQ()"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M2 2h9a1 1 0 011 1v5a1 1 0 01-1 1H5l-3 2.5V3a1 1 0 011-1z"/></svg> Follow-ups</button></div>`);
   await sleep(1600);showImprove();
 }
 
@@ -1152,7 +1157,7 @@ async function showImprove(){
     <div style="display:grid;grid-template-columns:1fr 160px 1fr;padding:12px 16px;border-bottom:1px solid var(--border-soft);font-size:12px"><span>Elasticity uplift +18% when availability >92%</span><span><span class="kc-badge" style="background:rgba(37,99,235,.1);color:var(--blue)">Config</span> Team</span><span style="color:var(--text-2)">ENSV trigger recalibrated to 90%</span></div>
     <div style="display:grid;grid-template-columns:1fr 160px 1fr;padding:12px 16px;font-size:12px"><span>RED Alert generated £310K ENSV recovery</span><span><span class="kc-badge" style="background:var(--accent-soft);color:var(--accent)">User</span> Analyst</span><span style="color:var(--text-2)">Availability KPI pre-highlighted</span></div>
   </div></div>`);
-  addCard(`<div class="anomaly-banner mt-8" style="background:rgba(5,150,105,.04);border-color:rgba(5,150,105,.2)"><span class="icon">🧠</span><span style="font-size:12px">All learnings saved to <strong>Memory</strong> and <strong>Knowledge Config</strong>.</span></div>`);
+  addCard(`<div class="anomaly-banner mt-8" style="background:rgba(5,150,105,.04);border-color:rgba(5,150,105,.2)"><span class="icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle"><circle cx="7" cy="7" r="5.5"/><path d="M5 7c0-1.5 1-2.5 2-2.5s2 1 2 2.5-1 2.5-2 2.5-2-1-2-2.5"/></svg></span><span style="font-size:12px">All learnings saved to <strong>Memory</strong> and <strong>Knowledge Config</strong>.</span></div>`);
 
   // Populate sidebar Memory & KC
   addMemoryItem('Availability KPI = primary signal','User');
@@ -1193,7 +1198,7 @@ function saveToRelic(){
 }
 
 function showInsightIQ(){
-  addCard(`<div class="card"><div class="card-header"><span class="card-header-title">💬 InsightIQ</span></div><div class="card-body">
+  addCard(`<div class="card"><div class="card-header"><span class="card-header-title"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><path d="M2 2h9a1 1 0 011 1v5a1 1 0 01-1 1H5l-3 2.5V3a1 1 0 011-1z"/></svg> InsightIQ</span></div><div class="card-body">
     <div style="display:flex;flex-direction:column;gap:4px">
       <div class="kc-item kc-item-editable" onclick="askFU('Why is Tesco declining faster than Ocado?')"><span>→</span> Why is Tesco declining faster than Ocado?</div>
       <div class="kc-item kc-item-editable" onclick="askFU('Show ${PS} availability trend for 8 weeks')"><span>→</span> ${PS} availability trend — 8 weeks</div>
@@ -1235,14 +1240,14 @@ function updateBrainPanel(){
   for(const [scope, items] of Object.entries(grouped)){
     html+=`<div class="brain-section">
       <div class="brain-section-title"><span style="color:${scopeColors[scope]||'var(--text-3)'}">●</span> ${scope} Memory</div>
-      ${items.map(t=>`<div class="brain-item"><span class="brain-item-icon">📌</span><span style="flex:1">${t}</span></div>`).join('')}
+      ${items.map(t=>`<div class="brain-item"><span class="brain-item-icon">&#8227;</span><span style="flex:1">${t}</span></div>`).join('')}
     </div>`;
   }
 
   if(kcItems.length){
     html+=`<div class="brain-section">
       <div class="brain-section-title"><span style="color:var(--accent)">●</span> Knowledge Config</div>
-      ${kcItems.map(k=>`<div class="brain-item"><span class="brain-item-icon">⚙️</span><span style="flex:1">${k.text}</span><span class="brain-scope" style="background:var(--accent-soft);color:var(--accent)">${k.type}</span></div>`).join('')}
+      ${kcItems.map(k=>`<div class="brain-item"><span class="brain-item-icon"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" style="display:inline;vertical-align:middle"><circle cx="6.5" cy="6.5" r="2"/><path d="M6.5 1.5v2M6.5 9.5v2M1.5 6.5h2M9.5 6.5h2M3 3l1.5 1.5M8.5 8.5L10 10M10 3L8.5 4.5M3 10l1.5-1.5"/></svg></span><span style="flex:1">${k.text}</span><span class="brain-scope" style="background:var(--accent-soft);color:var(--accent)">${k.type}</span></div>`).join('')}
     </div>`;
   }
 
@@ -1254,38 +1259,38 @@ function updateBrainPanel(){
 // BUILDERS
 // ══════════════════════════════════════════════
 function buildDSCard(){
-  const s=[{n:'Nielsen IQ (Digital Shelf)',d:'Availability & pricing — synced 2h ago',m:'4.2M records',c:'green'},{n:'DCIQ (Diageo Sales Platform)',d:'SKU performance, RSV, ENSV — synced 6h ago',m:'1.1M records',c:'green'},{n:'Bazaarvoice',d:'Ratings & Reviews — synced 24h ago',m:'87K reviews',c:'green'},{n:'Stackline / Vendor Central',d:'Competitor intel — synced 12h ago',m:'220K records',c:'green'},{n:'Retailer Data (Tesco, Ocado)',d:'Direct feeds — Ocado: 🟡 delayed',m:'890K records',c:'amber'},{n:'IWSR / Euromonitor',d:'Category intel — synced 48h ago',m:'15K signals',c:'green'},{n:'Competitor Websites (crawl)',d:COMP+' tracking — synced 3h ago',m:'12K data points',c:'green'}];
+  const s=[{n:'Nielsen IQ (Digital Shelf)',d:'Availability & pricing — synced 2h ago',m:'4.2M records',c:'green'},{n:'DCIQ (Diageo Sales Platform)',d:'SKU performance, RSV, ENSV — synced 6h ago',m:'1.1M records',c:'green'},{n:'Bazaarvoice',d:'Ratings & Reviews — synced 24h ago',m:'87K reviews',c:'green'},{n:'Stackline / Vendor Central',d:'Competitor intel — synced 12h ago',m:'220K records',c:'green'},{n:'Retailer Data (Tesco, Ocado)',d:'Direct feeds — Ocado: <span class="dot dot-a"></span> delayed',m:'890K records',c:'amber'},{n:'IWSR / Euromonitor',d:'Category intel — synced 48h ago',m:'15K signals',c:'green'},{n:'Competitor Websites (crawl)',d:COMP+' tracking — synced 3h ago',m:'12K data points',c:'green'}];
   return `<div class="card mt-12"><div class="collapse-toggle open" onclick="toggleC(this)"><span class="collapse-arrow">▶</span><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">DATA CONNECTIONS</span><span style="margin-left:auto;font-size:11px;color:var(--text-2)">7 of 7 active</span></div>
   <div class="collapse-content open" style="padding:6px 16px 14px">${s.map(x=>`<div class="ds-item"><div class="ds-dot ${x.c}"></div><div class="ds-info"><div class="ds-name">${x.n}</div><div class="ds-desc">${x.d}</div><div class="ds-meta">${x.m}</div></div><label class="ds-toggle"><input type="checkbox" checked/><span class="slider"></span></label></div>`).join('')}
-  <div class="anomaly-banner mt-8"><span class="icon">⚠️</span><span>Ocado feed delayed — using last available data. Flagged amber.</span></div></div></div>`;
+  <div class="anomaly-banner mt-8"><span class="icon">&#9888;</span><span>Ocado feed delayed — using last available data. Flagged amber.</span></div></div></div>`;
 }
 
 function buildKCCard(){
   return `<div class="card"><div class="collapse-toggle" onclick="toggleC(this)"><span class="collapse-arrow">▶</span><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)">KNOWLEDGE CONFIG</span><span style="margin-left:auto;font-size:11px;color:var(--accent)">Org level ▾</span></div>
   <div class="collapse-content" style="padding:10px 16px 14px">
     <div class="kc-section"><div class="kc-title">Thresholds</div>
-      ${kcEditRow('kc-avail','🎯','Availability Benchmark','95','%')}
-      ${kcEditRow('kc-red','🚨','RED Alert Threshold','80','%')}
-      ${kcEditRow('kc-amber','🟡','AMBER Alert Threshold','85','%')}
+      ${kcEditRow('kc-avail','&#9678;','Availability Benchmark','95','%')}
+      ${kcEditRow('kc-red','&#9888;','RED Alert Threshold','80','%')}
+      ${kcEditRow('kc-amber','<span class="dot dot-a"></span>','AMBER Alert Threshold','85','%')}
     </div>
     <div class="kc-section"><div class="kc-title">ENSV Formulae</div>
-      ${kcEditRow('kc-elast','📊','Elasticity Factor (availability >92%)','1.18','')}
-      ${kcEditRow('kc-formula','📈','Revenue Risk Multiplier','1.0','×')}
+      ${kcEditRow('kc-elast','&#916;','Elasticity Factor (availability >92%)','1.18','')}
+      ${kcEditRow('kc-formula','&#8599;','Revenue Risk Multiplier','1.0','×')}
     </div>
     <div class="kc-section"><div class="kc-title">Scope</div>
-      <div class="kc-item">🌍 UK — Tesco, Ocado, Amazon, Sainsbury's</div>
-      <div class="kc-item">📦 ${P}, ${PA}</div>
-      ${kcEditRow('kc-promo','⏰','Promo Campaign Window','14','days')}
+      <div class="kc-item">&#9679; UK — Tesco, Ocado, Amazon, Sainsbury's</div>
+      <div class="kc-item">&#9633; ${P}, ${PA}</div>
+      ${kcEditRow('kc-promo','&#9202;','Promo Campaign Window','14','days')}
     </div>
   </div></div>`;
 }
 
 function kcEditRow(id,icon,label,val,unit){
   return `<div class="kc-item kc-item-editable" id="${id}" onclick="kcStartEdit('${id}')">
-    <span>${icon}</span>
+    <span class="kc-edit-icon">${icon}</span>
     <span class="kc-edit-label" style="flex:1">${label}: <strong>${val}${unit}</strong></span>
     <span class="kc-badge" style="margin-left:auto">Edit</span>
-    <input type="text" class="kc-edit-input" value="${val}" data-unit="${unit}" data-label="${label}" data-icon="${icon}"
+    <input type="text" class="kc-edit-input" value="${val}" data-unit="${unit}" data-label="${label}"
       style="display:none;width:60px;padding:3px 7px;border:1.5px solid var(--accent);border-radius:5px;font-size:12px;font-weight:700;font-family:inherit;color:var(--accent);background:var(--accent-soft);outline:none;text-align:center"
       onkeydown="if(event.key==='Enter')kcSaveEdit('${id}')"
       onblur="kcSaveEdit('${id}')"/>
@@ -1335,23 +1340,23 @@ function buildTSCard(){
 }
 
 function buildStep(type,title,desc,meta,status){
-  return `<div class="card"><div class="card-body"><div style="display:flex;gap:10px;animation:fadeSlideIn .4s ease"><span class="step-badge ${type}">${type.toUpperCase()}</span><div class="step-info"><div class="step-title">${title}</div><div class="step-desc">${desc}</div><div class="step-meta">${meta}</div><div class="step-status ${status}">${status==='active'?'⏳ Running...':'✓ Done'}</div></div></div></div></div>`;
+  return `<div class="card"><div class="card-body"><div style="display:flex;gap:10px;animation:fadeSlideIn .4s ease"><span class="step-badge ${type}">${type.toUpperCase()}</span><div class="step-info"><div class="step-title">${title}</div><div class="step-desc">${desc}</div><div class="step-meta">${meta}</div><div class="step-status ${status}">${status==='active'?'&#8987; Running...':'✓ Done'}</div></div></div></div></div>`;
 }
 
 function buildSense(){
   return `<div class="card"><div class="card-header" style="background:rgba(37,99,235,.03)"><span class="card-header-title" style="color:var(--t-collect)">SENSE — ${PS}</span></div>
-  <div class="metric-row"><span class="metric-label">Availability</span><span class="metric-values">Now <strong>82%</strong> · Bench <strong>95%</strong></span><span class="metric-signal" style="color:var(--red)">🔴 -13pts</span></div>
-  <div class="metric-row"><span class="metric-label">Share of Search</span><span class="metric-values">Now <strong>12%</strong> · Bench <strong>15%</strong></span><span class="metric-signal" style="color:var(--amber)">🟡 -3pts</span></div>
-  <div class="metric-row"><span class="metric-label">Rating</span><span class="metric-values">Now <strong>4.5</strong> · Bench <strong>4.3</strong></span><span class="metric-signal" style="color:var(--green)">🟢 Above</span></div>
-  <div class="metric-row"><span class="metric-label">Content</span><span class="metric-values">Now <strong>92%</strong> · Bench <strong>90%</strong></span><span class="metric-signal" style="color:var(--green)">🟢 Good</span></div>
-  <div class="metric-row"><span class="metric-label">Media</span><span class="metric-values">Active</span><span class="metric-signal" style="color:var(--green)">🟢 OK</span></div></div>`;
+  <div class="metric-row"><span class="metric-label">Availability</span><span class="metric-values">Now <strong>82%</strong> · Bench <strong>95%</strong></span><span class="metric-signal" style="color:var(--red)"><span class="dot dot-r"></span> -13pts</span></div>
+  <div class="metric-row"><span class="metric-label">Share of Search</span><span class="metric-values">Now <strong>12%</strong> · Bench <strong>15%</strong></span><span class="metric-signal" style="color:var(--amber)"><span class="dot dot-a"></span> -3pts</span></div>
+  <div class="metric-row"><span class="metric-label">Rating</span><span class="metric-values">Now <strong>4.5</strong> · Bench <strong>4.3</strong></span><span class="metric-signal" style="color:var(--green)"><span class="dot dot-g"></span> Above</span></div>
+  <div class="metric-row"><span class="metric-label">Content</span><span class="metric-values">Now <strong>92%</strong> · Bench <strong>90%</strong></span><span class="metric-signal" style="color:var(--green)"><span class="dot dot-g"></span> Good</span></div>
+  <div class="metric-row"><span class="metric-label">Media</span><span class="metric-values">Active</span><span class="metric-signal" style="color:var(--green)"><span class="dot dot-g"></span> OK</span></div></div>`;
 }
 
 function buildRetailers(){
   return `<div class="card"><div class="card-header"><span class="card-header-title">RETAILERS — ${PS}</span></div><div class="card-body">
-  <div class="retailer-row"><span class="retailer-name">Amazon</span><span class="retailer-pct" style="color:var(--green)">96%</span><div class="retailer-bar-wrap"><div class="retailer-bar" style="width:96%;background:var(--green)"></div></div><span class="retailer-info">🟢 Stable · £2M potential</span></div>
-  <div class="retailer-row"><span class="retailer-name">Tesco</span><span class="retailer-pct" style="color:var(--red)">74%</span><div class="retailer-bar-wrap"><div class="retailer-bar" style="width:74%;background:var(--red)"></div></div><span class="retailer-info">🔴 Declining · £1.2M potential</span></div>
-  <div class="retailer-row"><span class="retailer-name">Ocado</span><span class="retailer-pct" style="color:var(--amber)">79%</span><div class="retailer-bar-wrap"><div class="retailer-bar" style="width:79%;background:var(--amber)"></div></div><span class="retailer-info">🟡 Volatile · £500K potential</span></div></div></div>`;
+  <div class="retailer-row"><span class="retailer-name">Amazon</span><span class="retailer-pct" style="color:var(--green)">96%</span><div class="retailer-bar-wrap"><div class="retailer-bar" style="width:96%;background:var(--green)"></div></div><span class="retailer-info"><span class="dot dot-g"></span> Stable · £2M potential</span></div>
+  <div class="retailer-row"><span class="retailer-name">Tesco</span><span class="retailer-pct" style="color:var(--red)">74%</span><div class="retailer-bar-wrap"><div class="retailer-bar" style="width:74%;background:var(--red)"></div></div><span class="retailer-info"><span class="dot dot-r"></span> Declining · £1.2M potential</span></div>
+  <div class="retailer-row"><span class="retailer-name">Ocado</span><span class="retailer-pct" style="color:var(--amber)">79%</span><div class="retailer-bar-wrap"><div class="retailer-bar" style="width:79%;background:var(--amber)"></div></div><span class="retailer-info"><span class="dot dot-a"></span> Volatile · £500K potential</span></div></div></div>`;
 }
 
 function toggleC(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open')}
@@ -1362,10 +1367,10 @@ function toggleC(el){el.classList.toggle('open');el.nextElementSibling.classList
 function openReport(){const w=window.open('','_blank');w.document.write(genReport());w.document.close()}
 function genReport(){return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${PS} Report</title><style>*{box-sizing:border-box;margin:0;padding:0}:root{--accent:#7845C0;--green:#16A34A;--amber:#D97706;--red:#DC2626;--bg:#F7F5FB;--surface:#fff;--border:#E8E2F4;--text-1:#1B1429;--text-2:#6B5F82;--text-3:#ACA0BF}body{font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:var(--bg);color:var(--text-1);padding:32px;font-size:14px;line-height:1.6}.c{max-width:860px;margin:0 auto}.hd{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid var(--border)}.lg{width:44px;height:44px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center}h1{font-size:22px;font-weight:700}.sub{font-size:13px;color:var(--text-2);margin-top:2px}.sec{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:18px;overflow:hidden}.sh{padding:14px 22px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.sb{padding:18px 22px}.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:18px}.mc{background:var(--bg);border-radius:10px;padding:14px;text-align:center}.mv{font-size:26px;font-weight:700}.ml{font-size:11px;color:var(--text-3);margin-top:3px}.md{font-size:12px;font-weight:600;margin-top:3px}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-3);border-bottom:2px solid var(--border)}td{padding:8px 12px;border-bottom:1px solid var(--border)}.b{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600}.br{background:rgba(220,38,38,.1);color:var(--red)}.bg{background:rgba(22,163,74,.1);color:var(--green)}.ba{background:rgba(217,119,6,.1);color:var(--amber)}.bl{background:var(--bg);color:var(--text-3)}.ai{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--bg);border-radius:8px;margin-bottom:6px}.ad{width:9px;height:9px;border-radius:50%;margin-top:5px;flex-shrink:0}.ks{display:grid;grid-template-columns:1fr 50px 16px 50px 70px;align-items:center;gap:6px;padding:8px 0;border-bottom:1px solid var(--border)}.ks:last-child{border:none}.ar{color:var(--green);font-weight:700}.ft{text-align:center;padding:20px;color:var(--text-3);font-size:11px;margin-top:16px}@media(max-width:640px){body{padding:14px}h1{font-size:17px}.hd{flex-direction:column;gap:10px;text-align:center}.lg{width:36px;height:36px}.sh{padding:10px 14px;font-size:11px}.sb{padding:12px 14px}.mg{grid-template-columns:repeat(2,1fr);gap:8px}.mv{font-size:20px}table{font-size:10px}th,td{padding:6px 8px}.ks{grid-template-columns:1fr 40px 12px 40px 60px;font-size:12px;gap:4px}.ai{padding:8px 10px;font-size:12px}.sec{border-radius:10px}}</style></head><body><div class="c">
 <div class="hd"><div class="lg"><svg width="22" height="22" fill="none" viewBox="0 0 16 16"><path d="M8 1l6.93 4v6L8 15 1.07 11V5L8 1z" fill="#fff" opacity=".9"/></svg></div><div><h1>${PS} — UK Shelf Report</h1><div class="sub">HarmonIQ · ${today()} · ${P}</div></div></div>
-<div class="sec"><div class="sh" style="color:var(--accent)">SENSE</div><div class="sb"><div class="mg"><div class="mc"><div class="mv" style="color:var(--red)">82%</div><div class="ml">Availability</div><div class="md" style="color:var(--red)">🔴 -13pts</div></div><div class="mc"><div class="mv" style="color:var(--amber)">12%</div><div class="ml">Share of Search</div><div class="md" style="color:var(--amber)">🟡 -3pts</div></div><div class="mc"><div class="mv" style="color:var(--green)">4.5</div><div class="ml">Rating</div><div class="md" style="color:var(--green)">🟢 Above</div></div><div class="mc"><div class="mv" style="color:var(--green)">92%</div><div class="ml">Content</div><div class="md" style="color:var(--green)">🟢 Good</div></div></div>
-<table><tr><th>Retailer</th><th>Avail</th><th>Trend</th><th>Revenue</th><th>Status</th></tr><tr><td>Amazon</td><td>96%</td><td>Stable</td><td>£2M</td><td><span class="b bg">🟢</span></td></tr><tr><td>Tesco</td><td>74%</td><td>Declining</td><td>£1.2M</td><td><span class="b br">🔴</span></td></tr><tr><td>Ocado</td><td>79%</td><td>Volatile</td><td>£500K</td><td><span class="b ba">🟡</span></td></tr></table></div></div>
-<div class="sec"><div class="sh" style="color:var(--accent)">PRIORITISE</div><div class="sb"><table><tr><th>#</th><th>Action</th><th>Risk</th><th>Priority</th><th>ENSV</th></tr><tr><td>1</td><td>Fix Tesco (${P})</td><td>£220K</td><td><span class="b br">🔴 High</span></td><td>£220K</td></tr><tr><td>2</td><td>Fix Ocado (${P})</td><td>£140K</td><td><span class="b br">🔴 High</span></td><td>£90K</td></tr><tr><td>3</td><td>Content Optimisation</td><td>£20K</td><td><span class="b bl">⚪ Low</span></td><td>Deferred</td></tr></table><div style="background:var(--bg);border-radius:8px;padding:12px 16px;margin-top:14px"><strong>Selected:</strong> Fix Tesco + Ocado · <strong>ENSV:</strong> <span style="color:var(--green);font-weight:700">+£310K</span></div></div></div>
-<div class="sec"><div class="sh" style="color:#DB2777">EXECUTE</div><div class="sb"><div class="ai"><div class="ad" style="background:var(--red)"></div><div><strong>🔴 RED:</strong> Tesco 74% — replenish 1,200 units</div></div><div class="ai"><div class="ad" style="background:var(--amber)"></div><div><strong>🟡 AMBER:</strong> Ocado 79% — replenish 800 units 48h</div></div><div class="ai"><div class="ad" style="background:#2563EB"></div><div><strong>Auto:</strong> Alert supply → Adjust stock → Generate order</div></div></div></div>
+<div class="sec"><div class="sh" style="color:var(--accent)">SENSE</div><div class="sb"><div class="mg"><div class="mc"><div class="mv" style="color:var(--red)">82%</div><div class="ml">Availability</div><div class="md" style="color:var(--red)"><span class="dot dot-r"></span> -13pts</div></div><div class="mc"><div class="mv" style="color:var(--amber)">12%</div><div class="ml">Share of Search</div><div class="md" style="color:var(--amber)"><span class="dot dot-a"></span> -3pts</div></div><div class="mc"><div class="mv" style="color:var(--green)">4.5</div><div class="ml">Rating</div><div class="md" style="color:var(--green)"><span class="dot dot-g"></span> Above</div></div><div class="mc"><div class="mv" style="color:var(--green)">92%</div><div class="ml">Content</div><div class="md" style="color:var(--green)"><span class="dot dot-g"></span> Good</div></div></div>
+<table><tr><th>Retailer</th><th>Avail</th><th>Trend</th><th>Revenue</th><th>Status</th></tr><tr><td>Amazon</td><td>96%</td><td>Stable</td><td>£2M</td><td><span class="b bg"><span class="dot dot-g"></span></span></td></tr><tr><td>Tesco</td><td>74%</td><td>Declining</td><td>£1.2M</td><td><span class="b br"><span class="dot dot-r"></span></span></td></tr><tr><td>Ocado</td><td>79%</td><td>Volatile</td><td>£500K</td><td><span class="b ba"><span class="dot dot-a"></span></span></td></tr></table></div></div>
+<div class="sec"><div class="sh" style="color:var(--accent)">PRIORITISE</div><div class="sb"><table><tr><th>#</th><th>Action</th><th>Risk</th><th>Priority</th><th>ENSV</th></tr><tr><td>1</td><td>Fix Tesco (${P})</td><td>£220K</td><td><span class="b br"><span class="dot dot-r"></span> High</span></td><td>£220K</td></tr><tr><td>2</td><td>Fix Ocado (${P})</td><td>£140K</td><td><span class="b br"><span class="dot dot-r"></span> High</span></td><td>£90K</td></tr><tr><td>3</td><td>Content Optimisation</td><td>£20K</td><td><span class="b bl"><span class="dot dot-m"></span> Low</span></td><td>Deferred</td></tr></table><div style="background:var(--bg);border-radius:8px;padding:12px 16px;margin-top:14px"><strong>Selected:</strong> Fix Tesco + Ocado · <strong>ENSV:</strong> <span style="color:var(--green);font-weight:700">+£310K</span></div></div></div>
+<div class="sec"><div class="sh" style="color:#DB2777">EXECUTE</div><div class="sb"><div class="ai"><div class="ad" style="background:var(--red)"></div><div><strong><span class="dot dot-r"></span> RED:</strong> Tesco 74% — replenish 1,200 units</div></div><div class="ai"><div class="ad" style="background:var(--amber)"></div><div><strong><span class="dot dot-a"></span> AMBER:</strong> Ocado 79% — replenish 800 units 48h</div></div><div class="ai"><div class="ad" style="background:#2563EB"></div><div><strong>Auto:</strong> Alert supply → Adjust stock → Generate order</div></div></div></div>
 <div class="sec"><div class="sh" style="color:#0891B2">MEASURE — Week 1→4</div><div class="sb"><div class="ks"><strong>Availability</strong><span>82%</span><span class="ar">→</span><span style="color:var(--green);font-weight:700">95%</span><span class="b bg">+13pts</span></div><div class="ks"><strong>Search</strong><span>12%</span><span class="ar">→</span><span style="color:var(--green);font-weight:700">16%</span><span class="b bg">+4pts</span></div><div class="ks"><strong>Conv.</strong><span>8.4%</span><span class="ar">→</span><span style="color:var(--green);font-weight:700">10.1%</span><span class="b bg">+1.7pts</span></div><div class="ks"><strong>Sales</strong><span>£420K</span><span class="ar">→</span><span style="color:var(--green);font-weight:700">£540K</span><span class="b bg">+£120K</span></div></div></div>
 <div class="ft">Generated by Harmon<span style="color:var(--accent)">IQ</span> · ${today()} · All decisions in Relic</div></div></body></html>`}
 </script>
